@@ -1,4 +1,4 @@
-from ..app import ma,db
+from config import ma,db
 
 class Hero(db.Model):
     __tablename__ = 'heroes'

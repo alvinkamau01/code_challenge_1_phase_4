@@ -1,22 +1,15 @@
+from config import db
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 
-# Initialize app
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///heroes.db'
+db.init_app(app)
 
-# Initialize DB, Marshmallow, and Migrate
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
 migrate = Migrate(app, db)
 
-# Import models after db is initialized
-from .models.hero import Hero, heroes_schema, hero_schema
-from .models.power import Power, powers_schema, power_schema
-from .models.heroes_powers import HeroPower, heroes_power_schema, hero_power_schema
-# Helper function for returning 404
+
 def not_found_response(entity):
     return jsonify({"error": f"{entity} not found"}), 404
 

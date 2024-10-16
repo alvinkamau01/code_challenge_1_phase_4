@@ -1,4 +1,6 @@
-from models import Hero, Power, HeroPower
+from models.hero import Hero
+from models.power import Power
+from models.heroes_powers import HeroPower
 from app import db
 
 def seed_data():
