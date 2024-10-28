@@ -1,6 +1,11 @@
 from config import db
-from flask import Flask
+from flask import Flask,jsonify
 from flask_migrate import Migrate
+from models.hero import Hero, heroes_schema, hero_schema
+from models.power import Power, powers_schema, power_schema
+from models.heroes_powers import HeroPower, heroes_power_schema, hero_power_schema,HeroPower, heroes_power_schema, hero_power_schema
+
+
 
 
 app = Flask(__name__)
@@ -12,6 +17,8 @@ migrate = Migrate(app, db)
 
 def not_found_response(entity):
     return jsonify({"error": f"{entity} not found"}), 404
+
+
 
 # Route: Get all heroes
 @app.route('/heroes', methods=['GET'])
@@ -60,10 +67,9 @@ def update_power(id):
 # Route: Create a new HeroPower
 @app.route('/hero_powers', methods=['POST'])
 def create_hero_power():
-    data = request.json
-    hero_id = data.get('hero_id')
-    power_id = data.get('power_id')
-    strength = data.get('strength')
+    hero_id = request.form.get('hero_id')
+    power_id = request.form.get('power_id')
+    strength = request.form.get('strength')
 
     if not hero_id or not power_id:
         return jsonify({"errors": ["validation errors"]}), 404

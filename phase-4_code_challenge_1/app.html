@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Hero Power</title>
+</head>
+<body>
+    <h1>Create Hero Power</h1>
+    <form id="heroPowerForm">
+        <label for="hero_id">Hero ID:</label>
+        <input type="number" id="hero_id" name="hero_id" required>
+        <br>
+        <label for="power_id">Power ID:</label>
+        <input type="number" id="power_id" name="power_id" required>
+        <br>
+        <label for="strength">Strength:</label>
+        <select id="strength" name="strength" required>
+            <option value="Strong">Strong</option>
+            <option value="Average">Average</option>
+            <option value="Weak">Weak</option>
+        </select>
+        <br>
+        <button type="submit">Create Hero Power</button>
+    </form>
+
+    <script>
+        document.getElementById('heroPowerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const heroId = document.getElementById('hero_id').value;
+            const powerId = document.getElementById('power_id').value;
+            const strength = document.getElementById('strength').value;
+
+            fetch('/hero_powers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    hero_id: heroId,
+                    power_id: powerId,
+                    strength: strength
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Optionally, you could display a success message to the user here
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Optionally, you could display an error message to the user here
+            });
+        });
+    </script>
+</body>
+</html>

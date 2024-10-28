@@ -1,4 +1,5 @@
-from config import ma,db
+from config import ma, db
+
 
 class HeroPower(db.Model):
     __tablename__ = 'hero_powers'
@@ -7,9 +8,12 @@ class HeroPower(db.Model):
     hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'), nullable=False)
     power_id = db.Column(db.Integer, db.ForeignKey('powers.id'), nullable=False)
 
-class HeroPowerSchema(ma.Schema):
+
+# Schema for HeroPower
+class HeroPowerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        fields = ('id', 'strength', 'hero_id', 'power_id')
+        model = HeroPower
+        load_instance = True
 
 hero_power_schema = HeroPowerSchema()
 heroes_power_schema = HeroPowerSchema(many=True)
